@@ -1,82 +1,79 @@
-CREATE DATABASE IF NOT EXISTS EmpresaDB;
-USE EmpresaDB;
+### ¿Cuáles son los identificadores y nombres de todos los proyectos existentes en la empresa?
+SELECT IDProyecto, NombreProyecto
+FROM Proyecto;
 
+###¿Cuáles son los proyectos que se desarrollan en 'CHICAGO'?
+SELECT IDProyecto, NombreProyecto
+FROM Proyecto
+WHERE Ubicacion = 'CHICAGO';
 
-CREATE TABLE Departamento (
-    IDDepartamento INT AUTO_INCREMENT PRIMARY KEY,
-    NombreDepartamento VARCHAR(50) NOT NULL,
-    Ubicacion VARCHAR(50) NOT NULL
-);
-
-
-CREATE TABLE Empleado (
-    IDEmpleado INT AUTO_INCREMENT PRIMARY KEY,
-    NombreEmpleado VARCHAR(50) NOT NULL,
-    Puesto VARCHAR(50) NOT NULL,
-    IDJefe INT,
-    FechaContratacion DATE NOT NULL,
-    Salario DECIMAL(10, 2) NOT NULL,
-    Comision DECIMAL(10, 2),
-    IDDepartamento INT NOT NULL,
-    FOREIGN KEY (IDJefe) REFERENCES Empleado(IDEmpleado),
-    FOREIGN KEY (IDDepartamento) REFERENCES Departamento(IDDepartamento)
-);
-
-
-CREATE TABLE Proyecto (
-    IDProyecto INT AUTO_INCREMENT PRIMARY KEY,
-    NombreProyecto VARCHAR(50) NOT NULL,
-    Ubicacion VARCHAR(50) NOT NULL,
-    IDDepartamento INT NOT NULL,
-    FOREIGN KEY (IDDepartamento) REFERENCES Departamento(IDDepartamento)
-);
-
-
-CREATE TABLE EmpleadoProyecto (
-    IDEmpleado INT NOT NULL,
-    IDProyecto INT NOT NULL,
-    HorasTrabajadas INT NOT NULL,
-    PRIMARY KEY (IDEmpleado, IDProyecto),
-    FOREIGN KEY (IDEmpleado) REFERENCES Empleado(IDEmpleado),
-    FOREIGN KEY (IDProyecto) REFERENCES Proyecto(IDProyecto)
-);
-
-INSERT INTO Departamento (NombreDepartamento, Ubicacion) VALUES ('ACCOUNTING', 'NEW YORK');
-INSERT INTO Departamento (NombreDepartamento, Ubicacion) VALUES ('RESEARCH', 'DALLAS');
-INSERT INTO Departamento (NombreDepartamento, Ubicacion) VALUES ('SALES', 'CHICAGO');
-INSERT INTO Departamento (NombreDepartamento, Ubicacion) VALUES ('OPERATIONS', 'BOSTON');
-
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('KING', 'PRESIDENT', NULL, '1981-11-17', 5000, NULL, 1);
-
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('JONES', 'MANAGER', 1, '1981-04-02', 2975, NULL, 2);
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('BLAKE', 'MANAGER', 1, '1981-05-01', 2850, NULL, 3);
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('CLARK', 'MANAGER', 1, '1981-06-09', 2450, NULL, 1);
-
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('SCOTT', 'ANALYST', 2, '1987-04-19', 3000, NULL, 2);
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('FORD', 'ANALYST', 2, '1981-12-03', 3000, NULL, 2);
-
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('SMITH', 'CLERK', 3, '1980-12-17', 800, NULL, 2);
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('ALLEN', 'SALESMAN', 4, '1981-02-20', 1600, 300, 3);
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('WARD', 'SALESMAN', 4, '1981-02-22', 1250, 500, 3);
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('MARTIN', 'SALESMAN', 4, '1981-09-28', 1250, 1400, 3);
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('TURNER', 'SALESMAN', 4, '1981-09-08', 1500, 0, 3);
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('ADAMS', 'CLERK', 5, '1987-05-23', 1100, NULL, 2);
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('JAMES', 'CLERK', 4, '1981-12-03', 950, NULL, 3);
-INSERT INTO Empleado (NombreEmpleado, Puesto, IDJefe, FechaContratacion, Salario, Comision, IDDepartamento) VALUES ('MILLER', 'CLERK', 6, '1982-01-23', 1300, NULL, 1);
-
-INSERT INTO Proyecto (NombreProyecto, Ubicacion, IDDepartamento) VALUES ('P1', 'BOSTON', 2);
-INSERT INTO Proyecto (NombreProyecto, Ubicacion, IDDepartamento) VALUES ('P4', 'CHICAGO', 3);
-INSERT INTO Proyecto (NombreProyecto, Ubicacion, IDDepartamento) VALUES ('P5', 'CHICAGO', 3);
-INSERT INTO Proyecto (NombreProyecto, Ubicacion, IDDepartamento) VALUES ('P6', 'LOS ANGELES', 3);
-INSERT INTO Proyecto (NombreProyecto, Ubicacion, IDDepartamento) VALUES ('P8', 'NEW YORK', 3);
-
-
-INSERT INTO EmpleadoProyecto (IDEmpleado, IDProyecto, HorasTrabajadas) VALUES (8, 2, 15);
-INSERT INTO EmpleadoProyecto (IDEmpleado, IDProyecto, HorasTrabajadas) VALUES (8, 3, 12);
-INSERT INTO EmpleadoProyecto (IDEmpleado, IDProyecto, HorasTrabajadas) VALUES (9, 2, 10);
-INSERT INTO EmpleadoProyecto (IDEmpleado, IDProyecto, HorasTrabajadas) VALUES (9, 5, 8);
-INSERT INTO EmpleadoProyecto (IDEmpleado, IDProyecto, HorasTrabajadas) VALUES (10, 1, 16);
-INSERT INTO EmpleadoProyecto (IDEmpleado, IDProyecto, HorasTrabajadas) VALUES (10, 4, 15);
-INSERT INTO EmpleadoProyecto (IDEmpleado, IDProyecto, HorasTrabajadas) VALUES (10, 5, 5);
-INSERT INTO EmpleadoProyecto (IDEmpleado, IDProyecto, HorasTrabajadas) VALUES (11, 3, 6);
-INSERT INTO EmpleadoProyecto (IDEmpleado, IDProyecto, HorasTrabajadas) VALUES (12, 1, 4);
+Consulta de Proyectos por Departamento: ¿Cuáles son los proyectos que pertenecen al departamento con identificador 2?
+sql
+Copiar código
+SELECT IDProyecto, NombreProyecto
+FROM Proyecto
+WHERE IDDepartamento = 2;
+Consulta de Proyectos y Departamentos: ¿Cuáles son los nombres y ubicaciones de los proyectos junto con los nombres de sus departamentos asociados?
+sql
+Copiar código
+SELECT Proyecto.NombreProyecto, Proyecto.Ubicacion, Departamento.NombreDepartamento
+FROM Proyecto
+JOIN Departamento ON Proyecto.IDDepartamento = Departamento.IDDepartamento;
+Consulta de Empleados por Proyecto: ¿Qué empleados están asignados al proyecto identificado con el número 4, y cuáles son sus nombres?
+sql
+Copiar código
+SELECT Empleado.IDEmpleado, Empleado.NombreEmpleado
+FROM EmpleadoProyecto
+JOIN Empleado ON EmpleadoProyecto.IDEmpleado = Empleado.IDEmpleado
+WHERE EmpleadoProyecto.IDProyecto = 4;
+Consulta de Proyectos por Empleado: ¿En qué proyectos está participando el empleado con el identificador 4, y cuáles son los nombres de esos proyectos?
+sql
+Copiar código
+SELECT Proyecto.IDProyecto, Proyecto.NombreProyecto
+FROM EmpleadoProyecto
+JOIN Proyecto ON EmpleadoProyecto.IDProyecto = Proyecto.IDProyecto
+WHERE EmpleadoProyecto.IDEmpleado = 4;
+Consulta de Horas Trabajadas por Proyecto: ¿Cuántas horas han trabajado en total los empleados en el proyecto con identificador 2?
+sql
+Copiar código
+SELECT SUM(HorasTrabajadas) AS TotalHoras
+FROM EmpleadoProyecto
+WHERE IDProyecto = 2;
+Consulta de Empleados con Horas Trabajadas: ¿Cuáles son los empleados que han trabajado más de 10 horas en el proyecto con identificador 2?
+sql
+Copiar código
+SELECT Empleado.IDEmpleado, Empleado.NombreEmpleado
+FROM EmpleadoProyecto
+JOIN Empleado ON EmpleadoProyecto.IDEmpleado = Empleado.IDEmpleado
+WHERE EmpleadoProyecto.IDProyecto = 2
+  AND EmpleadoProyecto.HorasTrabajadas > 10;
+Consulta de Total de Horas por Empleado: ¿Cuál es el total de horas trabajadas por cada empleado en todos los proyectos?
+sql
+Copiar código
+SELECT Empleado.IDEmpleado, Empleado.NombreEmpleado, SUM(EmpleadoProyecto.HorasTrabajadas) AS TotalHoras
+FROM Empleado
+JOIN EmpleadoProyecto ON Empleado.IDEmpleado = EmpleadoProyecto.IDEmpleado
+GROUP BY Empleado.IDEmpleado, Empleado.NombreEmpleado;
+Consulta de Empleados con Múltiples Proyectos: ¿Cuáles son los empleados que trabajan en más de un proyecto?
+sql
+Copiar código
+SELECT Empleado.IDEmpleado, Empleado.NombreEmpleado, COUNT(EmpleadoProyecto.IDProyecto) AS NumeroProyectos
+FROM Empleado
+JOIN EmpleadoProyecto ON Empleado.IDEmpleado = EmpleadoProyecto.IDEmpleado
+GROUP BY Empleado.IDEmpleado, Empleado.NombreEmpleado
+HAVING NumeroProyectos > 1;
+Consulta de Empleados y Horas Totales: ¿Cuáles son los empleados que han trabajado más de 30 horas en total en todos los proyectos?
+sql
+Copiar código
+SELECT Empleado.IDEmpleado, Empleado.NombreEmpleado, SUM(EmpleadoProyecto.HorasTrabajadas) AS TotalHoras
+FROM Empleado
+JOIN EmpleadoProyecto ON Empleado.IDEmpleado = EmpleadoProyecto.IDEmpleado
+GROUP BY Empleado.IDEmpleado, Empleado.NombreEmpleado
+HAVING TotalHoras > 30;
+Consulta de Proyectos y Horas Promedio: ¿Cuál es el promedio de horas trabajadas por proyecto?
+sql
+Copiar código
+SELECT Proyecto.IDProyecto, Proyecto.NombreProyecto, AVG(EmpleadoProyecto.HorasTrabajadas) AS HorasPromedio
+FROM Proyecto
+JOIN EmpleadoProyecto ON Proyecto.IDProyecto = EmpleadoProyecto.IDProyecto
+GROUP BY Proyecto.IDProyecto, Proyecto.NombreProyecto;
